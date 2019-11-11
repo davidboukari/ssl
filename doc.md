@@ -1,3 +1,5 @@
+- openssl req -x509 -days 365 -nodes -newkey rsa:2048 -keyout mygrafanaperso.key -out mygrafanaperso.crt  
+
 # -----------------------------------------------------------
 # - Method 0: Auto signed Certificate
 # -----------------------------------------------------------
