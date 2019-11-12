@@ -1,4 +1,41 @@
-# SSL
+### SSL ###
+
+# Generate a certificate for multi domaine
+
+```bash
+cat ../cert-sample.cfg
+[ req ]
+default_bits = 4096
+default_keyfile = private.key
+distinguished_name = req_distinguished_name
+attributes = req_attributes
+prompt = no
+
+[ req_distinguished_name ]
+C = CA
+ST = AB
+L = St. Albert
+O = JBMC-Software
+CN = domain.com
+emailAddress = my@email.com
+[ req_attributes ]
+[SAN]
+subjectAltName=DNS:domain.com,DNS:www.domain.com,DNS:otherdomain.com,DNS:www.otherdomain.com
+```
+
+```bash
+#!/bin/bash
+
+GENERATE_DIR=$PWD/generate
+CN=hawksysmoon.com
+
+mkdir -p $GENERATE_DIR
+/usr/bin/openssl genrsa 4096 > ${GENERATE_DIR}/private.key
+/usr/bin/openssl req -new -key ${GENERATE_DIR}/private.key
+
+/usr/bin/openssl req -new -sha256 -key ${GENERATE_DIR}/private.key -subj "/CN=$CN}" -reqexts SAN -config cert.cfg
+```
+
 
 # Generate auto key and certificate
 - openssl req -x509 -days 365 -nodes -newkey rsa:2048 -keyout mygrafanaperso.key -out mygrafanaperso.crt  
@@ -19,13 +56,13 @@ openssl req -noout -text -in server.csr
 # Unprotect the private key
 openssl rsa -in server-protected.key -out server.key
 
-#Generate the CRT 
+# Generate the CRT 
 openssl x509 -req -days 1000 -in server.csr -signkey server.key -out server.crt
 
-#Read a CRT
+# Read a CRT
 openssl x509 -in server.crt -text -noout
 
-#It is possible to concat severals CRT to on by using cat
+# It is possible to concat severals CRT to on by using cat
 cat domaina.crt domainb.ca.crt > certificate.alldomain.crt
 
 
