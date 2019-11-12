@@ -3,6 +3,57 @@
 # Generate a certificate for multi domaine
 
 ```bash
+cat ssl.conf
+[ req ]
+default_bits       = 4096
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+
+[ req_distinguished_name ]
+countryName                 = FR
+stateOrProvinceName         = France
+localityName                = Paris
+organizationName            = Hawksysmoon
+commonName                  = hawksysmoon.com
+commonName_max              = 64
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1   = hawksysmoon.com
+DNS.2   = www.hawksysmoon.com
+DNS.3   = otherdomaine.com
+```
+
+```bash
+cat generate.sh
+#!/bin/bash
+
+openssl genrsa -out private.key 4096
+
+openssl req -new -sha256 \
+    -out private.csr \
+    -key private.key \
+    -config ssl.conf
+
+openssl req -text -noout -in private.csr
+
+openssl x509 -req \
+    -sha256 \
+    -days 3650 \
+    -in private.csr \
+    -signkey private.key \
+    -out private.crt \
+    -extensions req_ext \
+    -extfile ssl.conf
+```
+
+ # Other way:w
+ 
+
+
+```bash
 cat ../cert-sample.cfg
 [ req ]
 default_bits = 4096
