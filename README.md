@@ -49,9 +49,7 @@ openssl x509 -req \
     -extfile ssl.conf
 ```
 
- # Other way:w
- 
-
+ # Other way
 
 ```bash
 cat ../cert-sample.cfg
