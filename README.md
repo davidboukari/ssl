@@ -1,5 +1,7 @@
 ### SSL ###
 
+see https://jamielinux.com/docs/openssl-certificate-authority/certificate-revocation-lists.html
+
 # Generate a certificate for multi domaine
 
 ```bash
@@ -67,6 +69,30 @@ openssl x509 -text -noout -in server.crt
 ```bash
 openssl crl -noout -text  -in ./crl.pem
 ```
+
+# Check if a certificate is valid (check by using CA certif auth)
+
+```bash
+openssl verify -CAfile ./certs/ca.pem   ./ca/signed/node1.pem
+```
+
+# See the inventory (index.txt or inventory.txt)
+
+```bash
+cat ./ca/inventory.txt
+0x0001 2019-11-07T19:01:58UTC 2024-11-06T19:01:58UTC /CN=Puppet CA: puppetmaster
+0x0002 2019-11-07T19:02:34UTC 2024-11-06T19:02:34UTC /CN=puppetmaster
+0x0003 2019-11-07T19:04:53UTC 2024-11-06T19:04:53UTC /CN=node1
+0x0004 2019-11-12T07:36:14UTC 2024-11-11T07:36:14UTC /CN=puppetmaster.blabla
+```
+
+# Revoke a certificate
+
+```bash
+cd /root/ca
+openssl ca -config intermediate/openssl.cnf -revoke intermediate/certs/bob@example.com.cert.pem
+```
+
 
  # Other way
 
