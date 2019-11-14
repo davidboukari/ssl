@@ -49,6 +49,20 @@ openssl x509 -req \
     -extfile ssl.conf
 ```
 
+
+# Read the CSR
+
+```bash
+openssl req -noout -text -in server.csr
+```
+
+# Read a CRT
+
+```bash
+openssl x509 -text -noout -in server.crt
+```
+
+
  # Other way
 
 ```bash
@@ -109,10 +123,11 @@ openssl rsa -in server-protected.key -out server.key
 openssl x509 -req -days 1000 -in server.csr -signkey server.key -out server.crt
 
 # Read a CRT
-openssl x509 -in server.crt -text -noout
+openssl x509 -text -noout -in server.crt
 
 # It is possible to concat severals CRT to on by using cat
 cat domaina.crt domainb.ca.crt > certificate.alldomain.crt
+
 
 
 # -----------------------------------------------------------
