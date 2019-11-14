@@ -1,6 +1,6 @@
 ### SSL ###
 
-see https://jamielinux.com/docs/openssl-certificate-authority/certificate-revocation-lists.html
+* see https://jamielinux.com/docs/openssl-certificate-authority/certificate-revocation-lists.html
 
 # Generate a certificate for multi domaine
 
