@@ -62,6 +62,11 @@ openssl req -noout -text -in server.csr
 openssl x509 -text -noout -in server.crt
 ```
 
+# Read CRL (Revocation Control List)
+
+```bash
+openssl crl -noout -text  -in ./crl.pem
+```
 
  # Other way
 
