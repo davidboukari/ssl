@@ -2,6 +2,10 @@
 
 * see https://jamielinux.com/docs/openssl-certificate-authority/certificate-revocation-lists.html
 
+```bash
+yum install openssl
+```
+
 # Generate a certificate for multi domaine
 
 ```bash
