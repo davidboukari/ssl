@@ -59,13 +59,13 @@ openssl x509 -req \
 # Read the CSR
 
 ```bash
-openssl req -noout -text -in server.csr
+openssl req -noout -text -in private.csr
 ```
 
 # Read a CRT
 
 ```bash
-openssl x509 -text -noout -in server.crt
+openssl x509 -text -noout -in private.crt
 ```
 
 # Read CRL (Revocation Control List)
