@@ -144,9 +144,11 @@ mkdir -p $GENERATE_DIR
 ### Generate auto key and certificate
 - openssl req -x509 -days 365 -nodes -newkey rsa:2048 -keyout mygrafanaperso.key -out mygrafanaperso.crt  
 
-;-----------------------------------------------------------
-;- Method 0: Auto signed Certificate
-;-----------------------------------------------------------
+<p>
+#-----------------------------------------------------------
+#- Method 0: Auto signed Certificate
+#-----------------------------------------------------------
+</p>
 
 ### Generate a protected private key
 openssl genrsa -des3 -out server-protected.key 2048
@@ -169,28 +171,17 @@ openssl x509 -text -noout -in server.crt
 ### It is possible to concat severals CRT to on by using cat
 cat domaina.crt domainb.ca.crt > certificate.alldomain.crt
 
+<p>
+#-----------------------------------------------------------
+#- Command documentation
+#-----------------------------------------------------------
+</p>
 
-;-----------------------------------------------------------
-;- Command documentation
-;-----------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;-----------------------------------------------------------
-;- Method 1: Auto signed Certificate
-;-----------------------------------------------------------
-
+<p>
+#-----------------------------------------------------------
+#- Method 1: Auto signed Certificate
+#-----------------------------------------------------------
+</p>
 
 Créer un certificat SSL auto-signé pour Nginx
 11/02/2014 Zephilou 2 Commentaires
