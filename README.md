@@ -4,12 +4,12 @@
 * see https://jamielinux.com/docs/openssl-certificate-authority/certificate-revocation-lists.html
 * see https://sysadmin.cyklodev.com/creer-un-certificat-ssl-auto-signe-pour-nginx/
 
-## Installation 
+### Installation 
 ```bash
 yum install openssl
 ```
 
-## Generate a certificate for multi domaine
+### Generate a certificate for multi domaine
 
 * Prepare the ssl template ssl.conf
 
@@ -37,7 +37,7 @@ DNS.2   = www.hawksysmoon.com
 DNS.3   = otherdomaine.com
 ```
 
-## Generate the certificate
+### Generate the certificate
 
 ```bash
 cat generate.sh
@@ -63,31 +63,31 @@ openssl x509 -req \
 ```
 
 
-## Read the CSR
+### Read the CSR
 
 ```bash
 openssl req -noout -text -in private.csr
 ```
 
-## Read a CRT
+### Read a CRT
 
 ```bash
 openssl x509 -text -noout -in private.crt
 ```
 
-## Read CRL (Revocation Control List)
+### Read CRL (Revocation Control List)
 
 ```bash
 openssl crl -noout -text  -in ./crl.pem
 ```
 
-## Check if a certificate is valid (check by using CA certif auth)
+### Check if a certificate is valid (check by using CA certif auth)
 
 ```bash
 openssl verify -CAfile ./certs/ca.pem   ./ca/signed/node1.pem
 ```
 
-## See the inventory (index.txt or inventory.txt)
+### See the inventory (index.txt or inventory.txt)
 
 ```bash
 cat ./ca/inventory.txt
@@ -97,15 +97,14 @@ cat ./ca/inventory.txt
 0x0004 2019-11-12T07:36:14UTC 2024-11-11T07:36:14UTC /CN=puppetmaster.blabla
 ```
 
-## Revoke a certificate
+### Revoke a certificate
 
 ```bash
 cd /root/ca
 openssl ca -config intermediate/openssl.cnf -revoke intermediate/certs/bob@example.com.cert.pem
 ```
 
-
- ## Other way
+### Other way
 
 ```bash
 cat ../cert-sample.cfg
@@ -142,7 +141,7 @@ mkdir -p $GENERATE_DIR
 ```
 
 
-## Generate auto key and certificate
+### Generate auto key and certificate
 - openssl req -x509 -days 365 -nodes -newkey rsa:2048 -keyout mygrafanaperso.key -out mygrafanaperso.crt  
 
 # -----------------------------------------------------------
