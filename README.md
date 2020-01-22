@@ -144,37 +144,35 @@ mkdir -p $GENERATE_DIR
 ### Generate auto key and certificate
 - openssl req -x509 -days 365 -nodes -newkey rsa:2048 -keyout mygrafanaperso.key -out mygrafanaperso.crt  
 
-# -----------------------------------------------------------
-# - Method 0: Auto signed Certificate
-# -----------------------------------------------------------
+;-----------------------------------------------------------
+;- Method 0: Auto signed Certificate
+;-----------------------------------------------------------
 
-# Generate a protected private key
+### Generate a protected private key
 openssl genrsa -des3 -out server-protected.key 2048
 
-# Generate a CSR which contains public key
+### Generate a CSR which contains public key
 openssl req -new -key server-protected.key -out server.csr
 
-# Read the CSR
+### Read the CSR
 openssl req -noout -text -in server.csr
 
-# Unprotect the private key
+### Unprotect the private key
 openssl rsa -in server-protected.key -out server.key
 
-# Generate the CRT 
+### Generate the CRT 
 openssl x509 -req -days 1000 -in server.csr -signkey server.key -out server.crt
 
-# Read a CRT
+### Read a CRT
 openssl x509 -text -noout -in server.crt
 
-# It is possible to concat severals CRT to on by using cat
+### It is possible to concat severals CRT to on by using cat
 cat domaina.crt domainb.ca.crt > certificate.alldomain.crt
 
 
-
-# -----------------------------------------------------------
-# - Command documentation
-# -----------------------------------------------------------
-
+;-----------------------------------------------------------
+;- Command documentation
+;-----------------------------------------------------------
 
 
 
@@ -188,9 +186,10 @@ cat domaina.crt domainb.ca.crt > certificate.alldomain.crt
 
 
 
-# -----------------------------------------------------------
-# - Method 1: Auto signed Certificate
-# -----------------------------------------------------------
+
+;-----------------------------------------------------------
+;- Method 1: Auto signed Certificate
+;-----------------------------------------------------------
 
 
 Créer un certificat SSL auto-signé pour Nginx
@@ -233,7 +232,7 @@ server {
     ssl_certificate      /etc/nginx/ssl/server.crt;
     ssl_certificate_key  /etc/nginx/ssl/server.key;
 
-# -----------------------------------------------------------
-# - Method 2: Generate and  Buy a validation
-# -----------------------------------------------------------
+;-----------------------------------------------------------
+;- Method 2: Generate and  Buy a validation
+;-----------------------------------------------------------
 
