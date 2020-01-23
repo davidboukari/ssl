@@ -1,6 +1,7 @@
 # SSL 
 
-* [Format list](format_file.md)
+* [List SSL files format](format_file.md)
+* see: https://github.com/davidboukari/apache/blob/master/generate_certificate.md
 * see https://jamielinux.com/docs/openssl-certificate-authority/certificate-revocation-lists.html
 * see https://sysadmin.cyklodev.com/creer-un-certificat-ssl-auto-signe-pour-nginx/
 
