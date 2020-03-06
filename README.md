@@ -73,7 +73,13 @@ openssl req -noout -text -in private.csr
 ### Read a CRT
 
 ```bash
-openssl x509 -text -noout -in private.crt
+openssl x509 -text -noout -in mycertificate.crt
+```
+
+### Read a PEM
+
+```bash
+openssl x509 -text -noout -in certificate.pem
 ```
 
 ### Read CRL (Revocation Control List)
