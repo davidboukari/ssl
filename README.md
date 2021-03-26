@@ -111,6 +111,28 @@ cd /root/ca
 openssl ca -config intermediate/openssl.cnf -revoke intermediate/certs/bob@example.com.cert.pem
 ```
 
+-----------------------------------------------------
+## Create your own CA
+* http://www.linux-france.org/prj/edu/archinet/systeme/ch24s03.html
+```
+openssl version -a
+
+# Create the private key
+openssl genrsa 1024 > servwiki.key  #add -des3 for passphrase
+
+# Create the CSR Certificate Signing Request for the CRT
+openssl req -new -key servwiki.key > servwiki.csr
+
+# Create the CA Certification Authority key
+openssl genrsa 1024 > ca.key
+
+# Create the CA auto signed certificate CRT
+openssl req -new -x509 -days 365 -key ca.key > ca.crt
+
+# Sign the client CRT
+openssl x509 -req -in servwiki.csr -out servwiki.crt -CA ca.crt -CAkey ca.key -CAcreateserial -CAserial ca.srl
+```
+-----------------------------------------------------
 ### Other way
 
 ```bash
