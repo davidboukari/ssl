@@ -120,6 +120,7 @@ openssl ca -config intermediate/openssl.cnf -revoke intermediate/certs/bob@examp
 ## Create your own CA
 * http://www.linux-france.org/prj/edu/archinet/systeme/ch24s03.html
 ```
+# Check openssl version
 openssl version -a
 
 # Create the private key
@@ -135,18 +136,20 @@ openssl genrsa 1024 > ca.key
 openssl req -new -x509 -days 365 -key ca.key > ca.crt
 
 # Sign the client CRT
-L'option -CAcreateserial est à utiliser seulement la première fois.
-Ceci va générer un identifiant (ca.srl).
-Lors des prochaines certification (pour renouvellement ou pour d'autres domaines) l'identifiant,
-contenu dans le fichier ca.srl, sera incrémenté à l'aide de l'option -CAserial ca.srl
-
+#The option -CAcreateserial should be use only the 1st time, it will generate ca.srl.
+#For the next certifications (to renew or others domaines) the ID in ca.srl will be incremented with the option -CAserial ca.srl
 openssl x509 -req -in servwiki.csr -out servwiki.crt -CA ca.crt -CAkey ca.key -CAcreateserial -CAserial ca.srl
 
 # Verify the CRT
 openssl verify  -CAfile ca.crt  servwiki.crt
 
 # Read the CRT
+openssl x509 -text -noout -in ca.crt
 openssl x509 -text -noout -in servwiki.crt
+
+openssl s_client -connect www.google.com:443
+openssl s_client -cert ./servwiki.crt -key  ./servwiki.key -connect www.google.com:443
+openssl s_client -cert ./servwiki.crt -key  ./servwiki.key -CAfile ca.crt  -connect www.google.com:443
 ```
 -----------------------------------------------------
 ### Other way
