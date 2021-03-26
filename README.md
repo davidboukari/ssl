@@ -10,6 +10,11 @@
 yum install openssl
 ```
 
+### version
+``` 
+openssl version -a
+```
+
 ### Generate a certificate for multi domaine
 
 * Prepare the ssl template ssl.conf
@@ -130,7 +135,18 @@ openssl genrsa 1024 > ca.key
 openssl req -new -x509 -days 365 -key ca.key > ca.crt
 
 # Sign the client CRT
+L'option -CAcreateserial est à utiliser seulement la première fois.
+Ceci va générer un identifiant (ca.srl).
+Lors des prochaines certification (pour renouvellement ou pour d'autres domaines) l'identifiant,
+contenu dans le fichier ca.srl, sera incrémenté à l'aide de l'option -CAserial ca.srl
+
 openssl x509 -req -in servwiki.csr -out servwiki.crt -CA ca.crt -CAkey ca.key -CAcreateserial -CAserial ca.srl
+
+# Verify the CRT
+openssl verify  -CAfile ca.crt  servwiki.crt
+
+# Read the CRT
+openssl x509 -text -noout -in servwiki.crt
 ```
 -----------------------------------------------------
 ### Other way
