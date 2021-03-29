@@ -150,6 +150,11 @@ openssl x509 -text -noout -in servwiki.crt
 openssl s_client -connect www.google.com:443
 openssl s_client -cert ./servwiki.crt -key  ./servwiki.key -connect www.google.com:443
 openssl s_client -cert ./servwiki.crt -key  ./servwiki.key -CAfile ca.crt  -connect www.google.com:443
+
+openssl s_client -connect logstash.myelk.com:5048 -ssl3
+openssl s_client -connect logstash.myelk.com:5048 -tls1
+openssl s_client -connect logstash.myelk.com:5048 -tls1_1
+openssl s_client -connect logstash.myelk.com:5048 -tls1_2
 ```
 -----------------------------------------------------
 ### Other way
