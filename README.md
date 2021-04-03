@@ -156,7 +156,9 @@ openssl s_client -connect logstash.myelk.com:5048 -tls1
 openssl s_client -connect logstash.myelk.com:5048 -tls1_1
 openssl s_client -connect logstash.myelk.com:5048 -tls1_2
 ```
------------------------------------------------------
+## TLS/MTLS
+* https://docs.microsoft.com/fr-fr/skypeforbusiness/plan-your-deployment/security/tls-and-mtls
+----------------------------------------------
 ### Other way
 
 ```bash
