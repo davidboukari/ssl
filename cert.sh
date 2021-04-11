@@ -27,14 +27,14 @@ openssl genrsa -out ${DESTDIR}/ca.key 1024
 #openssl x509 -in ${DESTDIR}/ca.crt -text -noout -serial|grep serial|cut -d'=' -f2 > ${DESTDIR}/${SERIAL}
 
 # Create the CA auto signed certificate CRT
-#openssl req -new -x509 -days 365 -key ${DESTDIR}/ca.key  -out ${DESTDIR}/ca.crt  -config ${CA}.conf -subj "/C=FR/ST=France/L=Paris/O=MyElk/CN=myelk.com"
-openssl req -new -x509 -days 365 -key ${DESTDIR}/ca.key  -out ${DESTDIR}/ca.crt  -config ${CERTNAME}.conf<<EOF
-FR
-France
-Paris
-MyElk
-myelk.com
-EOF
+openssl req -new -x509 -days 365 -key ${DESTDIR}/ca.key  -out ${DESTDIR}/ca.crt  -config ${CA}.conf -subj "/C=FR/ST=France/L=Paris/O=MyElk/CN=myelk.com"
+#openssl req -new -x509 -days 365 -key ${DESTDIR}/ca.key  -out ${DESTDIR}/ca.crt  -config ${CERTNAME}.conf<<EOF
+#FR
+#France
+#Paris
+#MyElk
+#myelk.com
+#EOF
 
 # Sign the client CRT
 #The option -CAcreateserial should be use only the 1st time, it will generate ca.srl.
@@ -45,8 +45,6 @@ EOF
 #  openssl x509 -req -in ${DESTDIR}/${CERTNAME}.csr -out ${DESTDIR}/${CERTNAME}.crt -CA ${DESTDIR}/ca.crt -CAkey ${DESTDIR}/ca.key  -CAserial ${DESTDIR}/${SERIAL} -extensions v3_req -extfile ${CERTNAME}.conf
 #fi
 openssl x509 -req -in ${DESTDIR}/${CERTNAME}.csr -out ${DESTDIR}/${CERTNAME}.crt -CA ${DESTDIR}/ca.crt -CAkey ${DESTDIR}/ca.key  -CAcreateserial   -CAserial ${DESTDIR}/${SERIAL} -extensions v3_req -extfile ${CERTNAME}.conf
-
-exit 100
 
 # Create the private key, add -des3 for passphrase
 openssl genrsa 1024 > ${DESTDIR}/${CERTNAME_CLIENT}.key 
