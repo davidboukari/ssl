@@ -35,17 +35,17 @@ openssl genrsa 1024 > ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.key
 # Create the CSR Certificate Signing Request for the CRT
 openssl req -new -key ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.key -out ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.csr  -subj "/C=FR/ST=France/L=Paris/O=MyElk/CN=filebeat.mypersonalelk.com"
 
-# Create the CA Certification Authority key
-openssl genrsa -out ${DESTDIR_CLIENT}/ca.key 1024
+## Create the CA Certification Authority key
+#openssl genrsa -out ${DESTDIR_CLIENT}/ca.key 1024
+#
+## Create the CA auto signed certificate CRT
+#openssl req -new -x509 -days 365 -key ${DESTDIR_CLIENT}/ca.key  -out ${DESTDIR_CLIENT}/ca.crt  -config ${CA_CLIENT}.conf -subj "/C=FR/ST=France/L=Paris/O=MyElk/CN=mypersonalelk.com"
 
-# Create the CA auto signed certificate CRT
-openssl req -new -x509 -days 365 -key ${DESTDIR_CLIENT}/ca.key  -out ${DESTDIR_CLIENT}/ca.crt  -config ${CA_CLIENT}.conf -subj "/C=FR/ST=France/L=Paris/O=MyElk/CN=mypersonalelk.com"
-
-#cp ${DESTDIR_SRV}/ca.* ${DESTDIR_CLIENT}
+cp ${DESTDIR_SRV}/ca.* ${DESTDIR_CLIENT}
 
 # Create the CRT
-openssl x509 -req -in ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.csr -out ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.crt -CA ${DESTDIR_CLIENT}/ca.crt -CAkey ${DESTDIR_CLIENT}/ca.key -CAcreateserial  -CAserial ${DESTDIR_CLIENT}/${SERIAL} -extensions v3_req -extensions usr_cert -extfile ${CERTNAME_CLIENT}.conf
-#openssl x509 -req -in ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.csr -out ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.crt -CA ${DESTDIR_CLIENT}/ca.crt -CAkey ${DESTDIR_CLIENT}/ca.key  -CAserial ${DESTDIR_CLIENT}/${SERIAL} -extensions v3_req -extensions usr_cert -extfile ${CERTNAME_CLIENT}.conf
+#openssl x509 -req -in ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.csr -out ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.crt -CA ${DESTDIR_CLIENT}/ca.crt -CAkey ${DESTDIR_CLIENT}/ca.key -CAcreateserial  -CAserial ${DESTDIR_CLIENT}/${SERIAL} -extensions v3_req -extensions usr_cert -extfile ${CERTNAME_CLIENT}.conf
+openssl x509 -req -in ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.csr -out ${DESTDIR_CLIENT}/${CERTNAME_CLIENT}.crt -CA ${DESTDIR_CLIENT}/ca.crt -CAkey ${DESTDIR_CLIENT}/ca.key  -CAserial ${DESTDIR_CLIENT}/${SERIAL} -extensions v3_req -extensions usr_cert -extfile ${CERTNAME_CLIENT}.conf
 
 # Convert key to pkcs8
 openssl pkcs8 -in ${DESTDIR_SRV}/${CERTNAME_SRV}.key -topk8 -nocrypt -out ${DESTDIR_SRV}/${CERTNAME_SRV}.pkcs8.key
