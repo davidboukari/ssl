@@ -166,6 +166,22 @@ Certificate chain
  1 s:/C=US/O=Google Trust Services/CN=GTS CA 1O1
    i:/OU=GlobalSign Root CA - R2/O=GlobalSign/CN=GlobalSign
 ---
+...
+...
+No client certificate CA names sent
+Peer signing digest: SHA256
+Server Temp Key: ECDH, P-256, 256 bits
+---
+SSL handshake has read 3249 bytes and written 415 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+...
+...
 
 # Check TLS protocols
 openssl s_client -connect logstash.myelk.com:5048 -ssl3
