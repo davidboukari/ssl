@@ -150,7 +150,24 @@ openssl x509 -text -noout -in servwiki.crt
 openssl s_client -connect www.google.com:443
 openssl s_client -cert ./servwiki.crt -key  ./servwiki.key -connect www.google.com:443
 openssl s_client -cert ./servwiki.crt -key  ./servwiki.key -CAfile ca.crt  -connect www.google.com:443
+# Check MTLS
+openssl s_client -cert /etc/filebeat/cert/filebeat.myelk.com.crt -key /etc/filebeat/cert/filebeat.myelk.com.pkcs8.key -CAfile /etc/filebeat/cert/ca.crt  -connect www.google.com:443
+CONNECTED(00000003)
+depth=2 OU = GlobalSign Root CA - R2, O = GlobalSign, CN = GlobalSign
+verify return:1
+depth=1 C = US, O = Google Trust Services, CN = GTS CA 1O1
+verify return:1
+depth=0 C = US, ST = California, L = Mountain View, O = Google LLC, CN = www.google.com
+verify return:1
+---
+Certificate chain
+ 0 s:/C=US/ST=California/L=Mountain View/O=Google LLC/CN=www.google.com
+   i:/C=US/O=Google Trust Services/CN=GTS CA 1O1
+ 1 s:/C=US/O=Google Trust Services/CN=GTS CA 1O1
+   i:/OU=GlobalSign Root CA - R2/O=GlobalSign/CN=GlobalSign
+---
 
+# Check TLS protocols
 openssl s_client -connect logstash.myelk.com:5048 -ssl3
 openssl s_client -connect logstash.myelk.com:5048 -tls1
 openssl s_client -connect logstash.myelk.com:5048 -tls1_1
