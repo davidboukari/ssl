@@ -151,7 +151,7 @@ openssl s_client -connect www.google.com:443
 openssl s_client -cert ./servwiki.crt -key  ./servwiki.key -connect www.google.com:443
 openssl s_client -cert ./servwiki.crt -key  ./servwiki.key -CAfile ca.crt  -connect www.google.com:443
 # Check MTLS
-openssl s_client -cert /etc/filebeat/cert/filebeat.myelk.com.crt -key /etc/filebeat/cert/filebeat.myelk.com.pkcs8.key -CAfile /etc/filebeat/cert/ca.crt  -connect www.google.com:443
+openssl s_client -tls1_2 -cert filebeat.myelk.com.crt -key filebeat.myelk.com.pkcs8.key -CAfile ca.crt  -connect www.google.com:443
 CONNECTED(00000003)
 depth=2 OU = GlobalSign Root CA - R2, O = GlobalSign, CN = GlobalSign
 verify return:1
