@@ -236,6 +236,10 @@ mkdir -p $GENERATE_DIR
 /usr/bin/openssl req -new -sha256 -key ${GENERATE_DIR}/private.key -subj "/CN=$CN}" -reqexts SAN -config cert.cfg
 ```
 
+### openssl s_client send data
+```
+echo -e "GET / HTTP/1.1\r\n" | openssl s_client -cert /root/kubernetes/apachessl/donotcommit/client.dijon.fr/client.dijon.fr.crt -key  /root/kubernetes/apachessl/donotcommit/client.dijon.fr/client.dijon.fr.key  -connect localhost:9091
+```
 
 ### Generate auto key and certificate
 - openssl req -x509 -days 365 -nodes -newkey rsa:2048 -keyout mygrafanaperso.key -out mygrafanaperso.crt  
