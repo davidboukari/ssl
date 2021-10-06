@@ -81,6 +81,12 @@ openssl req -noout -text -in private.csr
 openssl x509 -text -noout -in mycertificate.crt
 ```
 
+### Read CN of a certificate
+```
+openssl x509 -noout -subject -in client.dijon.fr.crt
+subject= /C=FR/ST=France/L=Paris/O=IHS/CN=client.dijon.fr
+```
+
 ### Read a PEM
 
 ```bash
