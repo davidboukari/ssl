@@ -15,6 +15,39 @@ yum install openssl
 openssl version -a
 ```
 
+
+# ======================================
+## Generate Certificate
+```
+CN=mycert.mydomain
+OU="myOU"
+keypass="changeit"
+
+openssl req -new -keyout "${CN}.key" -newkey rsa:2048 -out "ccsr" -subject "/C=FR/ST=Ile de France/L=Paris/O=Root/OU=${OU}/CN=${CN}"
+openssl req -text -noout -verify -in ${CN}.csr
+```
+
+## Build pem & pkcs12
+```
+openssl x509 -in ${CN}.crt -inform DER -out ${CN}.pem -outform PEM
+openssl pkcs12 -export ${CN}.p12 -inkey ${CN}.key -in ${CN}.pem
+```
+
+## Check all
+```
+openssl x509 -text -noout -in ${CN}.crt
+openssl req -noout -text -in ${CN}.csr
+
+openssl x509 -noout -modulus -in ${CN}.crt | openssl md5sum
+openssl req  -noout -modulus -in ${cN}.csr | openssl md5sum
+openssl rsa  -noout -modulus -in ${CN}.key | openssl md5sum
+
+keytool -list -v -keystore ${CN}.p12
+```
+
+# ======================================
+
+
 ### Generate a certificate for multi domaine
 
 * Prepare the ssl template ssl.conf
