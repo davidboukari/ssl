@@ -62,7 +62,37 @@ keytool -list -v -keystore ${CN}.jks
 ```
 
 # ======================================
+```
+tee san.cnf<<EOF
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+default_keyfile = multisan.key
+prompt = no
 
+[req_distinguished_name]
+C = FR
+ST = France
+L = Paris
+O = OrganizatioName
+OU = OrganizationUnit
+CN = server.domain1.com
+
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = server.domain1.com
+DNS.2 = server.domain2.com
+DNS.3 = server.domain3.com
+EOF
+
+openssl req -out sslcert.csr -newkey rsa:2048 -nodes -keyout private.key -config san.cnf
+
+```
+# ======================================
 
 ### Generate a certificate for multi domaine
 
