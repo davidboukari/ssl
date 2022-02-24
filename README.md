@@ -33,6 +33,11 @@ openssl x509  -inform DER -in ${CN}.crt -outform PEM -out ${CN}.pem
 openssl pkcs12 -export -out ${CN}.p12 -inkey ${CN}.key -in ${CN}.pem
 ```
 
+## Build jks
+```
+keytool -importkeystore -srckeystore ${CN}.p12 -srcstoretype pkcs12 -destkeystore ${CN}.jks
+```
+
 ## Check all
 ```
 openssl x509 -text -noout -in ${CN}.crt
