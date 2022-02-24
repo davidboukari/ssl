@@ -19,12 +19,17 @@ openssl version -a
 # ======================================
 ## Generate Certificate
 ```
+# Set variables
 CN=mycert.mydomain
 OU="myOU"
 keypass="changeit"
 
+# CSR
 openssl req -new -keyout "${CN}.key" -newkey rsa:2048 -out "ccsr" -subject "/C=FR/ST=Ile de France/L=Paris/O=Root/OU=${OU}/CN=${CN}"
 openssl req -text -noout -verify -in ${CN}.csr
+
+# CRT
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${CN}.key -out ${CN}.crt
 ```
 
 ## Build pem & pkcs12
