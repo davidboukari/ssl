@@ -62,6 +62,7 @@ keytool -list -v -keystore ${CN}.jks
 ```
 
 # ======================================
+Generate a multi domaine certiticate multisan
 ```
 tee multisan.conf<<EOF
 [req]
