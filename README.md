@@ -63,11 +63,11 @@ keytool -list -v -keystore ${CN}.jks
 
 # ======================================
 ```
-tee san.cnf<<EOF
+tee multisan.conf<<EOF
 [req]
 distinguished_name = req_distinguished_name
 req_extensions = v3_req
-default_keyfile = multisan.key
+#default_keyfile = multisan.key
 prompt = no
 
 [req_distinguished_name]
@@ -89,7 +89,9 @@ DNS.2 = server.domain2.com
 DNS.3 = server.domain3.com
 EOF
 
-openssl req -out sslcert.csr -newkey rsa:2048 -nodes -keyout private.key -config san.cnf
+openssl req -new -nodes -newkey rsa:2048 -keyout multisan.key -out multisan.csr -config multisan.conf
+
+#openssl req -out sslcert.csr -newkey rsa:2048 -nodes -keyout multisan.key -config san.cnf
 
 ```
 # ======================================
