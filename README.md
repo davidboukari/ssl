@@ -18,6 +18,7 @@ openssl version -a
 
 # ======================================
 ## Generate Certificate
+* https://srvfail.com/ucc-multidomain-csr/
 ```
 # Set variables
 CN=mycert.mydomain
