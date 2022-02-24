@@ -21,6 +21,7 @@ openssl version -a
 ```
 # Set variables
 CN=mycert.mydomain
+CA=mycert.mydomain-ca
 OU="myOU"
 keypass="changeit"
 
@@ -35,7 +36,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${CN}.key -out ${CN}
 ## Build pem & pkcs12
 ```
 openssl x509  -inform DER -in ${CN}.crt -outform PEM -out ${CN}.pem 
-openssl pkcs12 -export -out ${CN}.p12 -inkey ${CN}.key -in ${CN}.pem
+openssl pkcs12 -export -out ${CN}.p12 -inkey ${CN}.key -in ${CN}.pem -certfile ${CA}
 ```
 
 ## Build jks
