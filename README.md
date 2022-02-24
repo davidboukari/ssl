@@ -38,9 +38,9 @@ openssl pkcs12 -export ${CN}.p12 -inkey ${CN}.key -in ${CN}.pem
 openssl x509 -text -noout -in ${CN}.crt
 openssl req -noout -text -in ${CN}.csr
 
-openssl x509 -noout -modulus -in ${CN}.crt | openssl md5sum
-openssl req  -noout -modulus -in ${cN}.csr | openssl md5sum
-openssl rsa  -noout -modulus -in ${CN}.key | openssl md5sum
+openssl x509 -noout -modulus -in ${CN}.crt | openssl md5
+openssl req  -noout -modulus -in ${cN}.csr | openssl md5
+openssl rsa  -noout -modulus -in ${CN}.key | openssl md5
 
 keytool -list -v -keystore ${CN}.p12
 ```
