@@ -29,7 +29,7 @@ openssl req -text -noout -verify -in ${CN}.csr
 
 ## Build pem & pkcs12
 ```
-openssl x509 -in ${CN}.crt -inform DER -out ${CN}.pem -outform PEM
+openssl x509  -inform DER -in ${CN}.crt -outform PEM -out ${CN}.pem 
 openssl pkcs12 -export ${CN}.p12 -inkey ${CN}.key -in ${CN}.pem
 ```
 
