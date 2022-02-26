@@ -37,6 +37,12 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${CN}.key -out ${CN}
 ## Build pem & pkcs12
 ```
 openssl x509  -inform DER -in ${CN}.crt -outform PEM -out ${CN}.pem 
+
+#if error unable to load certificate
+#139624210466704:error:0D0680A8:asn1 encoding routines:ASN1_CHECK_TLEN:wrong tag:tasn_dec.c:1239:
+#139624210466704:error:0D07803A:asn1 encoding routines:ASN1_ITEM_EX_D2I:nested asn1 error:tasn_dec.c:405:Type=X509
+# just cp ${CN}.crt ${CN}.pem 
+
 openssl pkcs12 -export -out ${CN}.p12 -inkey ${CN}.key -in ${CN}.pem -certfile ${CA}
 ```
 
