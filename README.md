@@ -91,8 +91,19 @@ DNS.2 = server.domain2.com
 DNS.3 = server.domain3.com
 EOF
 
+# Generate private key & CSR
 openssl req -new -nodes -newkey rsa:2048 -keyout multisan.key -out multisan.csr -config multisan.conf
+
+# Check CSR
 openssl req -text -noout -verify -in ${CN}.csr
+
+# Build from an existing key & csr
+openssl x509 -req -signkey multisan.key -in multisan.csr  -days 365 -out multisan.crt
+
+
+# Or Build from existing key only
+openssl -x509 req -key multisan.key -new -days 365 -out multisan.crt
+
 
 ```
 # ======================================
