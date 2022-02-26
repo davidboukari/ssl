@@ -44,11 +44,17 @@ openssl x509  -inform DER -in ${CN}.crt -outform PEM -out ${CN}.pem
 # just cp ${CN}.crt ${CN}.pem 
 
 openssl pkcs12 -export -out ${CN}.p12 -inkey ${CN}.key -in ${CN}.pem -certfile ${CA}
+
+#Check 
+keytool -list -v -keystore ${CN}.p12
 ```
 
 ## Build jks
 ```
 keytool -importkeystore -srckeystore ${CN}.p12 -srcstoretype pkcs12 -destkeystore ${CN}.jks
+
+#Check
+keytool -list -v -keystore ${CN}.jks
 ```
 
 ## Check all
