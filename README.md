@@ -92,8 +92,7 @@ DNS.3 = server.domain3.com
 EOF
 
 openssl req -new -nodes -newkey rsa:2048 -keyout multisan.key -out multisan.csr -config multisan.conf
-
-#openssl req -out sslcert.csr -newkey rsa:2048 -nodes -keyout multisan.key -config san.cnf
+openssl req -text -noout -verify -in ${CN}.csr
 
 ```
 # ======================================
