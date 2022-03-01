@@ -15,6 +15,52 @@ yum install openssl
 openssl version -a
 ```
 
+# ======================================
+Generate a multi domaine certiticate multisan
+```
+tee multisan.conf<<EOF
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+#default_keyfile = multisan.key
+prompt = no
+
+[req_distinguished_name]
+C = FR
+ST = France
+L = Paris
+O = OrganizatioName
+OU = OrganizationUnit
+CN = server.domain1.com
+
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = server.domain1.com
+DNS.2 = server.domain2.com
+DNS.3 = server.domain3.com
+EOF
+
+# Generate private key & CSR
+openssl req -new -nodes -newkey rsa:2048 -keyout multisan.key -out multisan.csr -config multisan.conf
+
+# Check CSR
+openssl req -text -noout -verify -in ${CN}.csr
+
+# Build from an existing key & csr
+openssl x509 -req -signkey multisan.key -in multisan.csr  -days 365 -out multisan.crt
+
+
+# Or Build from existing key only
+openssl -x509 req -key multisan.key -new -days 365 -out multisan.crt
+
+
+```
+# ======================================
+
 
 # ======================================
 ## Generate Certificate
@@ -74,51 +120,6 @@ keytool -list -v -keystore ${CN}.p12
 keytool -list -v -keystore ${CN}.jks
 ```
 
-# ======================================
-Generate a multi domaine certiticate multisan
-```
-tee multisan.conf<<EOF
-[req]
-distinguished_name = req_distinguished_name
-req_extensions = v3_req
-#default_keyfile = multisan.key
-prompt = no
-
-[req_distinguished_name]
-C = FR
-ST = France
-L = Paris
-O = OrganizatioName
-OU = OrganizationUnit
-CN = server.domain1.com
-
-[v3_req]
-keyUsage = keyEncipherment, dataEncipherment
-extendedKeyUsage = serverAuth
-subjectAltName = @alt_names
-
-[alt_names]
-DNS.1 = server.domain1.com
-DNS.2 = server.domain2.com
-DNS.3 = server.domain3.com
-EOF
-
-# Generate private key & CSR
-openssl req -new -nodes -newkey rsa:2048 -keyout multisan.key -out multisan.csr -config multisan.conf
-
-# Check CSR
-openssl req -text -noout -verify -in ${CN}.csr
-
-# Build from an existing key & csr
-openssl x509 -req -signkey multisan.key -in multisan.csr  -days 365 -out multisan.crt
-
-
-# Or Build from existing key only
-openssl -x509 req -key multisan.key -new -days 365 -out multisan.crt
-
-
-```
-# ======================================
 
 ### Generate a certificate for multi domaine
 
