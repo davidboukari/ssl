@@ -73,7 +73,7 @@ OU="myOU"
 keypass="changeit"
 
 # CSR
-openssl req -new -keyout "${CN}.key" -newkey rsa:2048 -out "${CN}.csr" -subject "/C=FR/ST=Ile de France/L=Paris/O=Root/OU=${OU}/CN=${CN}"
+openssl req -new -keyout "${CN}.key" -newkey rsa:2048 -out "${CN}.csr" -subj "/C=FR/ST=Ile de France/L=Paris/O=Root/OU=${OU}/CN=${CN}"
 openssl req -text -noout -verify -in ${CN}.csr
 
 # CRT
