@@ -19,7 +19,6 @@ openssl version -a
 ```
 #!/bin/bash -x
 
-
 CN=mycert.fr
 SUBJ="/C=FR/ST=Ile de France/L=Paris/O=Root"
 ADDEXT="DNS:www.mycert.fr,DNS:web.mycert.fr"
@@ -41,7 +40,6 @@ mkdir -p ${CN}
 #openssl req -x509 -nodes -days ${DURATION_IN_DAYS} -newkey rsa:${SIZE} -keyout -out ${CN}/${CN}.crt -subj "${SUBJ}/OU=${OU}/CN=${CN}" -passout pass:"${KEYPASS}" -extensions san -config <(cat /etc/ssl/openssl.cnf <(printf "[req]distinguished_name=req\n[san]\nsubjectAltName=${ADDEXT}"))
 openssl req -x509 -nodes -days ${DURATION_IN_DAYS} -newkey rsa:${SIZE} -keyout  ${CN}/${CN}.key -out ${CN}/${CN}.crt -subj "${SUBJ}/OU=${OU}/CN=${CN}" -passout pass:"${KEYPASS}" -extensions san -config <(printf "[req]\ndistinguished_name=req\n[san]\nsubjectAltName=${ADDEXT}")
 
-
 # Check CRT
 openssl x509 -noout -text -in ${CN}/${CN}.crt
 
@@ -53,8 +51,6 @@ openssl pkcs12 -export -out ${CN}/${CN}.p12 -inkey ${CN}/${CN}.key -in ${CN}/${C
 
 # jks
 keytool -keypass "${KEYPASS}" -storepass "${KEYPASS}" -importkeystore -srckeystore ${CN}/${CN}.p12 -srcstoretype pkcs12 -destkeystore ${CN}/${CN}.jks
-
-
 ```
 
 
