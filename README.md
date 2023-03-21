@@ -43,6 +43,13 @@ openssl req -x509 -nodes -days ${DURATION_IN_DAYS} -newkey rsa:${SIZE} -keyout  
 # Check CRT
 openssl x509 -noout -text -in ${CN}/${CN}.crt
 
+# Check CRT match with key
+echo "KEY md5"
+openssl rsa -noout -modulus -in ${CN}/${CN}.key  | openssl md5
+
+echo "CRT md5"
+openssl x509 -noout -modulus -in ${CN}/${CN}.crt | openssl md5
+
 # PEM
 cat ${CN}/${CN}.crt ${CN}/${CN}.key > ${CN}/${CN}.pem
 
