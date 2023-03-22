@@ -9,6 +9,7 @@
 ```bash
 yum install openssl
 ```
+* Doc: https://gist.github.com/mohanpedala/468cf9cef473a8d7610320cff730cdd1
 
 ### version
 ``` 
@@ -49,6 +50,9 @@ openssl rsa -noout -modulus -in ${CN}/${CN}.key  | openssl md5
 
 echo "CRT md5"
 openssl x509 -noout -modulus -in ${CN}/${CN}.crt | openssl md5
+
+# Generate the CSR from CRT + KEY`
+openssl x509 -in ${CN}/${CN}.crt -signkey ${CN}/${CN}.key -x509toreq -out ${CN}/${CN}.csr
 
 # PEM
 cat ${CN}/${CN}.crt ${CN}/${CN}.key > ${CN}/${CN}.pem
