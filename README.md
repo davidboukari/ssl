@@ -63,8 +63,12 @@ cat ${CN}/${CN}.crt ${CN}/${CN}.key > ${CN}/${CN}.pem
 # P12
 openssl pkcs12 -export -out ${CN}/${CN}.p12 -inkey ${CN}/${CN}.key -in ${CN}/${CN}.pem -passout pass:"${KEYPASS}"
 
-# jks
-keytool -keypass "${KEYPASS}" -storepass "${KEYPASS}" -importkeystore -srckeystore ${CN}/${CN}.p12 -srcstoretype pkcs12 -destkeystore ${CN}/${CN}.jks
+# jks 
+if which keytool ;then
+  keytool -keypass "${KEYPASS}" -storepass "${KEYPASS}" -importkeystore -srckeystore ${CN}/${CN}.p12 -srcstoretype pkcs12 -destkeystore ${CN}/${CN}.jks
+else
+  echo "Please install openjdk to get keytool"
+fi
 ```
 
 
