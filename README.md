@@ -16,6 +16,45 @@ yum install openssl
 openssl version -a
 ```
 
+# Generate a CA
+```
+cat generate-ca.sh 
+#!/bin/bash
+
+openssl genrsa -des3 -out myCA.key 2048
+openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem
+
+
+./generate-ca.sh 
+Generating RSA private key, 2048 bit long modulus (2 primes)
+......................................+++++
+...........................+++++
+e is 65537 (0x010001)
+Enter pass phrase for myCA.key:
+140584141211456:error:28078065:UI routines:UI_set_result_ex:result too small:crypto/ui/ui_lib.c:905:You must type in 4 to 1023 characters
+Enter pass phrase for myCA.key:
+Verifying - Enter pass phrase for myCA.key:
+Enter pass phrase for myCA.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:FR
+State or Province Name (full name) []:Paris
+Locality Name (eg, city) [Default City]:Paris
+Organization Name (eg, company) [Default Company Ltd]:myhawksys.com
+Organizational Unit Name (eg, section) []:myhawksys
+Common Name (eg, your name or your server's hostname) []:myhawksys
+Email Address []:admin@myhawksys.com
+[dboukari@mysymfony ca]$ ls
+generate-ca.sh  myCA.key  myCA.pem
+
+```
+
+
 # ======================================
 ```
 #!/bin/bash -x
