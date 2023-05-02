@@ -18,14 +18,18 @@ openssl version -a
 
 # Generate a CA
 ```
-cat generate-ca.sh 
 #!/bin/bash
-
 #openssl genrsa -des3 -out myCA.key 2048
-openssl genrsa  -out myCA.key 2048
+
+#uncrypted
+#openssl genrsa  -nodes -out myCA.key 2048
+
+openssl genrsa -out myCA.key 2048
 openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem
+
 # Decrypt private key
 openssl rsa -in myCA.key  -out myCA-decrypted.key
+
 
 
 ./generate-ca.sh 
