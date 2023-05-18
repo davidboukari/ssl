@@ -16,6 +16,23 @@ yum install openssl
 openssl version -a
 ```
 
+## Update ca 
+```
+* Centos
+
+copy your certificates inside
+
+/etc/pki/ca-trust/source/anchors/
+
+then run the following command
+
+update-ca-trust
+
+* Ubuntu
+echo "$TRUSTED_CERT" > /usr/local/share/ca-certificates/ca.crt && update-ca-certificates
+
+```
+
 # Generate a CA
 ```
 #!/bin/bash
