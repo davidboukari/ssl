@@ -16,6 +16,7 @@ yum install openssl
 openssl version -a
 ```
 
+
 ## Update ca Centos
 ```
 * Centos
@@ -78,6 +79,79 @@ Common Name (eg, your name or your server's hostname) []:myhawksys
 Email Address []:admin@myhawksys.com
 [dboukari@mysymfony ca]$ ls
 generate-ca.sh  myCA.key  myCA.pem
+
+```
+
+
+## Use Vault as PKI with existing Root CA
+```
+$ cat install_ca.sh 
+#!/bin/bash
+
+export VAULT_ADDR="https://..."
+export VAULT_TOKEN="hvs...."
+
+# create root ca
+certs_dir="./ca"
+pem=$(cat $certs_dir/myCA.crt $certs_dir/myCA.key)
+
+vault secrets enable -path=pki_root pki
+vault secrets tune -max-lease-ttl=87600h pki_root
+vault write pki_root/config/ca pem_bundle="$pem"
+
+# create the intermediate
+vault secrets enable pki
+vault secrets tune -max-lease-ttl=43800h pki
+
+csr=$(vault write pki/intermediate/generate/internal \
+  -format=json common_name="myhawksys.com Intermdiate CA" \
+  | jq -r .data.csr)
+
+intermediate=$(vault write pki_root/root/sign-intermediate \
+  -format=json csr="$csr" format=pem_bundle ttl=43800h \
+  | jq -r .data.certificate)
+
+chained=$(echo -e "$intermediate\n$(cat $certs_dir/myCA.crt)")
+
+vault write pki/intermediate/set-signed certificate="$chained"
+
+echo "$intermediate" > intermediate.crt
+
+vault write pki/roles/cert \
+  allowed_domains=localhost,myhawksys.com \
+  allow_subdomains=true \
+  max_ttl=43800h
+
+# destroy the temp root
+vault secrets disable pki_root
+
+
+
+# ========== Request a new certificate in the subdomain
+cat issue.sh 
+#!/bin/bash
+
+export VAULT_ADDR="https://..."
+export VAULT_TOKEN="hvs...."
+
+function usage(){
+  echo -n "
+$0 <subdomain_name>
+
+"
+}
+
+if [ $# -lt 1 ];then
+  usage
+  exit 10
+fi 
+
+SUBDOMAIN=$1
+
+vault write \
+  -format=json \
+  pki/issue/cert \
+  common_name=${SUBDOMAIN}.myhawksys.com
 
 ```
 
