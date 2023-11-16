@@ -84,6 +84,7 @@ generate-ca.sh  myCA.key  myCA.pem
 
 
 ## Use Vault as PKI with existing Root CA
+* https://andydote.co.uk/2019/08/25/vault-development-ca/
 ```
 $ cat install_ca.sh 
 #!/bin/bash
