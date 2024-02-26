@@ -73,16 +73,23 @@ cat generate.sh
 
 # https://www.ibm.com/support/pages/how-create-csr-multiple-subject-alternative-name-san-entries-pase-openssl-3rd-party-or-internet-ca
 
-openssl req -newkey rsa:4096 -nodes -sha256 -keyout key.pem -out req.csr -config SAN.cnf
+#openssl req -newkey rsa:4096 -nodes -sha256 -keyout cert.key -out cert.csr -config SAN.cnf
+
+
+openssl req -x509 -nodes -days 730 -newkey rsa:4096 -keyout cert.key -out cert.crt -config SAN.cnf -extensions 'v3_req'
+
+# Generate the CSR from CRT + KEY`
+openssl x509 -in cert.crt -signkey cert.key -x509toreq -out cert.csr
 
 # Check csr
-openssl req -text -noout -verify -in req.csr
+openssl req -text -noout -verify -in cert.csr
 
 echo ""
 echo ""
 echo ""
 
-cat req.csr
+# Check crt
+openssl x509 -noout -text -in cert.crt
 
 # =====================
 cat certocrt.sh 
