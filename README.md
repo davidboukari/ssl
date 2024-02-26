@@ -37,6 +37,64 @@ echo "$TRUSTED_CERT" > /usr/local/share/ca-certificates/ca.crt && update-ca-cert
 
 ```
 
+## Generate CSR only
+```
+cat SAN.cnf 
+# https://www.ibm.com/support/pages/how-create-csr-multiple-subject-alternative-name-san-entries-pase-openssl-3rd-party-or-internet-ca
+[ req ]
+prompt                 = no
+days                   = 365
+distinguished_name     = req_distinguished_name
+req_extensions         = v3_req
+
+
+[ req_distinguished_name ]
+countryName            = FR
+stateOrProvinceName    = CD
+localityName           = EFG_HIJ
+organizationName       = MyOrg
+organizationalUnitName = MyOrgUnit
+commonName             = mygitlab.com
+emailAddress           = admin@mygitlab.com
+
+[ v3_req ]
+basicConstraints       = CA:false
+extendedKeyUsage       = serverAuth
+subjectAltName         = @sans	
+
+[ sans ]
+DNS.0 = mygitlab.com
+DNS.1 = www.mygitlab.com
+email.1 = admin@mygitlab.com
+
+# ======================
+cat generate.sh 
+#!/bin/bash
+
+# https://www.ibm.com/support/pages/how-create-csr-multiple-subject-alternative-name-san-entries-pase-openssl-3rd-party-or-internet-ca
+
+openssl req -newkey rsa:4096 -nodes -sha256 -keyout key.pem -out req.csr -config SAN.cnf
+
+# Check csr
+openssl req -text -noout -verify -in req.csr
+
+echo ""
+echo ""
+echo ""
+
+cat req.csr
+
+# =====================
+cat certocrt.sh 
+#!/bin/bash
+
+openssl x509 -inform DER -in $CERT -out ${CERT}.crt.new
+```
+
+
+
+
+
 # Generate a CA
 ```
 #!/bin/bash
