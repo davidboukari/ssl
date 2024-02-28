@@ -33,6 +33,8 @@ update-ca-trust
 ## Update ca Ubuntu
 ```
 * Ubuntu
+echo "$TRUSTED_CERT" > /etc/ssl/certs/ca.crt && update-ca-certificates
+or 
 echo "$TRUSTED_CERT" > /usr/local/share/ca-certificates/ca.crt && update-ca-certificates
 
 ```
